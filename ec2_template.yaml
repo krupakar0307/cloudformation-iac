@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  AWS CloudFormation Sample Template EC2_Instance
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the web server
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Default: krupakar
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  InstanceType:
+    Description: WebServer EC2 instance type
+    Type: String
+    Default: t2.micro
+    ConstraintDescription: must be a valid EC2 instance type.
+Resources:
+  EC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      KeyName: krupakar
+      InstanceType: !Ref InstanceType
+      ImageId: ami-0c7217cdde317cfec
+      # https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-security-group.html
+Outputs:
+  Instance:
+    Value: !GetAtt 
+      - EC2Instance
+      - PublicDnsName
+    Description: DNS Name of the newly created EC2 instance
